@@ -1,73 +1,62 @@
-# Techify - Premium Learning Management System
+# Techify Client - Luxury Learning Experience
 
-Techify is a luxury editorial design system-based Learning Management System (LMS) built with React, TypeScript, and Vite. It offers a comprehensive platform for engineers, designers, and technology professionals to teach and learn.
+Techify is a luxury, editorial-inspired frontend for a technical LMS. It is built with **React 19**, **Vite**, and **Tailwind CSS**, prioritizing a high-end aesthetic with smooth user interactions.
 
-## 🌟 Key Features
+---
 
-### 🔐 Role-Based Architecture
-The platform supports three distinct user roles, each with a dedicated dashboard and tailored experience:
-- **Students**: Learn and track progress.
-- **Instructors**: Create and manage courses.
-- **Administrators**: Oversee the platform and analyze data.
+## ✨ Key Features
 
-### 🎓 Student Features
-- **Course Discovery**: Browse a catalog of premium technical courses with category filters and search.
-- **Enrollment & Learning**: Enroll in courses and access lesson content.
-- **Video Player & Progress Tracking**: Custom video player that automatically tracks watch percentage and remembers the last accessed lesson.
-- **Dashboard**: Personalized dashboard showing learning statistics, in-progress courses, and completed courses.
+### 🎨 Luxury Editorial Design
+*   **Palette**: 'Alabaster' background, 'Charcoal' text, and 'Gold' accents.
+*   **Interactions**: Page transitions and modal reveals powered by **Framer Motion**.
+*   **Typography**: Mix of *Playfair Display* (Headings) and *Inter* (Body) for a high-end magazine feel.
 
-### 👨‍🏫 Instructor Features
-- **Course Creation**: Create and publish courses with details, pricing, and category.
-- **Lesson Management**: Upload and order lessons for each course. Supports video uploads (or external URLs), rich text content, and custom thumbnails.
-- **Media Management**: Built-in image cropper for perfect course and lesson thumbnails.
-- **Analytics**: Track total courses and enrolled students.
+### 📺 Smart Learning Interface
+*   **Video Engine**: Custom player that communicates with the backend every 10% of progress.
+*   **Lesson Sidebar**: Dynamic curriculum list that updates "Watched" status and completion badges in real-time.
 
-### 🛡️ Admin Features
-- **User Management**: View all users, change user roles (promote to instructor/admin), or remove users.
-- **Course Moderation**: Oversee all published courses across the platform and remove them if necessary.
-- **Category Management**: Create and manage course categories to keep the platform organized.
-- **Platform Analytics**: Comprehensive dashboard showing enrollment trends, category distribution, and total platform metrics.
+### ✂️ Media Workflow
+*   **Client-Side Cropping**: Integrated **Canvas-based image cropper** allows users to perfectly frame profile pictures and course thumbnails before they are converted to Base64 and sent to the server.
 
-### 👤 Profile & Security
-- **Authentication**: Secure login and registration with JWT.
-- **Profile Management**: Update personal details and upload/crop profile avatars.
-- **Password Strength**: Real-time password strength meter and validation during registration and password changes.
-
-### 🎨 UI/UX Design System
-- **Luxury Aesthetic**: Custom design system featuring an 'Alabaster', 'Charcoal', and 'Gold' color palette.
-- **Smooth Animations**: Page transitions, modal reveals, and interactions powered by `framer-motion`.
-- **Responsive Layout**: Fully responsive design with a collapsible mobile sidebar for dashboards.
-- **Custom Components**: Includes reusable, highly-styled UI components like Skeleton loaders, Toasts, Badges, and Data Tables.
+---
 
 ## 🛠️ Tech Stack
+*   **Framework**: React 19 (Vite)
+*   **Styling**: Tailwind CSS 4.0
+*   **Icons**: Lucide React
+*   **State**: Context API (Auth, Toast)
+*   **Forms**: React Hook Form
+*   **Networking**: Axios with request/response interceptors
 
-- **Framework**: React 18 with Vite
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS with custom CSS variables
-- **Routing**: React Router v6
-- **State Management**: React Context API (Auth, Toast)
-- **Form Handling**: React Hook Form
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
-- **HTTP Client**: Axios
+---
 
-## 🚀 Getting Started
+## 🚀 Local Development
 
-1. Clone the repository.
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+### 1. Environment Setup
+Create a `.env` file in the root:
+```env
+VITE_API_URL=http://localhost:5000/api
+```
 
-3. Set up your environment variables. Create a `.env` file in the root directory:
+### 2. Installation & Running
+```bash
+npm install
+npm run dev   # Starts Vite server on http://localhost:5173
+```
 
-   ```env
-   VITE_API_URL=http://localhost:5000/api
-   ```
+---
 
-4. Start the development server:
+## 🔗 Connecting to Backend
 
-   ```bash
-   npm run dev
-   ```
+The client uses an **Axios Interceptor** (`src/services/api.ts`) to handle connectivity:
+1.  **Auth Injection**: It automatically grabs the `lms_token` from `localStorage` and injects it into the `Authorization` header.
+2.  **401 Handling**: If a token expires, the interceptor clears local storage and redirects the user to `/login`.
+3.  **Media Resolution**: A utility `getMediaUrl` handles the mapping of relative server paths (e.g., `/uploads/...`) to absolute URLs using the API base.
 
+---
+
+## 📂 Architecture
+*   **`/components/ui`**: Atomic, reusable luxury components (Buttons, Inputs, Modals).
+*   **`/context`**: Global providers for Authentication and the Toast notification system.
+*   **`/hooks`**: Specialized logic for video progress tracking and enrollment status.
+*   **`/pages`**: Role-based routing for Students, Instructors, and Admins.

@@ -1,56 +1,149 @@
-# Techify - Full-Stack Learning Management System
+# Techify - Premium Full-Stack Learning Management System
 
-Techify is a premium, full-stack Learning Management System (LMS) built with the MERN stack (MongoDB, Express, React, Node.js) and TypeScript. This repository contains both the backend API and the frontend client integrated into a single cohesive project structure.
-
-## 🏗️ Architecture Overview
-
-The application follows a monolithic repository structure where both backend and frontend source files coexist within the `src/` directory.
-
-* **Frontend**: A React single-page application (SPA) powered by Vite, handling user interfaces, state management, and client-side routing.
-* **Backend**: An Express.js REST API handling business logic, database operations with MongoDB, authentication, and file processing.
+Techify is a luxury, editorial-inspired Learning Management System (LMS) designed for engineers, designers, and technology professionals. Built with the **MERN stack** (MongoDB, Express, React, Node.js) and **TypeScript**, it provides a seamless end-to-end experience for creating, managing, and consuming high-quality technical content.
 
 ---
 
-## ✨ Features
+## 🏗️ Architecture Overview
 
-### Frontend (Client-Side)
+The project is organized as a decoupled monorepo containing two primary packages:
 
-* **Role-Based Dashboards**: Distinct UI layouts for Students, Instructors, and Admins.
-* **Custom Video Player**: Advanced playback with progress tracking and auto-resume capabilities.
-* **Rich UI Components**: Built with Tailwind CSS, featuring skeleton loaders, animated modals (Framer Motion), and toast notifications.
-* **Media Processing**: Built-in image cropping utility for profile pictures and course thumbnails before uploading.
+*   **`lms-back-end/`**: A robust Express.js REST API using Mongoose for MongoDB data modeling. It handles business logic, JWT-based authentication, Role-Based Access Control (RBAC), and heavy-duty data aggregation for analytics.
+*   **`lms-front-end/`**: A high-performance React SPA powered by Vite and Tailwind CSS. It features a custom design system, complex state management via Context API, and interactive components like a progress-aware video player and client-side image cropper.
 
-### Backend (Server-Side)
+---
 
-* **Secure Authentication**: JWT-based stateless authentication with hashed passwords (bcryptjs).
-* **Role-Based Access Control (RBAC)**: Middleware to protect routes and ensure only authorized roles (e.g., `instructor`, `admin`) can access specific endpoints.
-* **Media Handling**: Base64 file parsing with strict MIME-type validation and size limits.
-* **Advanced Data Aggregation**: MongoDB aggregation pipelines to calculate platform statistics, enrollment tracking, and monthly revenue/student growth.
+## ✨ Features by Role
+
+### 🎓 Student Experience
+*   **Course Discovery**: Browse curated technical courses with advanced category filtering and search.
+*   **Smart Learning Interface**: A dedicated "Watch" environment with a sidebar for course curriculum and lesson status.
+*   **Progress Tracking**: Automated video watch percentage tracking. Lessons are marked complete only after 95% watch time, and progress is persisted across sessions.
+*   **Personal Dashboard**: View enrollment statistics (In-Progress vs. Completed) and quickly resume the last accessed lesson.
+
+### 👨‍🏫 Instructor Studio
+*   **Studio Dashboard**: Track total student reach and active course performance.
+*   **Course Creator**: Multi-step flow for course metadata, pricing, and high-resolution thumbnails.
+*   **Curriculum Builder**: Drag-and-drop-style lesson management. Supports local video uploads (processed as Base64) or external embeds (YouTube/Vimeo).
+*   **Media Management**: Integrated image cropping utility to ensure all thumbnails meet platform aesthetic standards.
+
+### 🛡️ Admin Control Panel
+*   **Platform Analytics**: Real-time visualization of enrollment trends, user growth (monthly aggregates), and category distribution.
+*   **Global Moderation**: Oversight of all users and courses. Admins can promote users to instructors, moderate content, and manage dynamic categories.
+*   **System Integrity**: Secure deletion protocols for users and courses to maintain database hygiene.
 
 ---
 
 ## 🛠️ Tech Stack
 
-**Frontend:** React 18, TypeScript, Vite, Tailwind CSS, Framer Motion, React Router v6, React Hook Form, Axios.
-**Backend:** Node.js, Express.js, TypeScript, MongoDB (Mongoose), JSON Web Tokens (JWT).
+| Layer | Technologies |
+| :--- | :--- |
+| **Frontend** | React 18, TypeScript, Vite, Tailwind CSS, Framer Motion, Lucide Icons, React Hook Form, Axios |
+| **Backend** | Node.js, Express.js, TypeScript, MongoDB (Mongoose), JWT, Bcrypt.js, Morgan, Jet-Logger |
+| **DevOps/Tools** | ESLint, Prettier, TS-Node, Nodemon, Vitest |
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+*   **Node.js**: v18.0.0 or higher.
+*   **MongoDB**: A local instance or a MongoDB Atlas connection string.
+
+### 2. Backend Setup
+1.  Navigate to the backend directory:
+    ```bash
+    cd lms-back-end
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Configure environment variables:
+    Create a `.env` file based on the provided `.env.example`:
+    ```env
+    PORT=5000
+    MONGO_URI=mongodb://localhost:27017/techify
+    JWT_SECRET=your_jwt_secret_key
+    JWT_EXPIRES_IN=7d
+    CLIENT_URL=http://localhost:5173
+    UPLOAD_PATH=uploads
+    ```
+4.  **Seed the Database** (Highly Recommended):
+    Populate the system with 50+ students, 5 instructors, and 20 courses to see the analytics in action:
+    ```bash
+    npm run seed
+    ```
+    *(Default password for all seeded users: `password123`)*
+
+5.  Start the server:
+    ```bash
+    npm run dev
+    ```
+
+### 3. Frontend Setup
+1.  Navigate to the frontend directory:
+    ```bash
+    cd lms-front-end
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Configure API connection:
+    Create a `.env` file:
+    ```env
+    VITE_API_URL=http://localhost:5000/api
+    ```
+4.  Start the development server:
+    ```bash
+    npm run dev
+    ```
 
 ---
 
 ## 🔗 Connecting Frontend & Backend
 
-Because both exist in the same environment during development, they need to communicate across different ports.
+The connection is established via HTTP requests using **Axios**. To ensure smooth communication:
 
-1. **Backend Port**: The Express server typically runs on `http://localhost:5000`.
-2. **Frontend Port**: The Vite development server typically runs on `http://localhost:5173`.
-3. **The Connection**: The frontend uses Axios to make HTTP requests to the backend. This connection is established via the `VITE_API_URL` environment variable. The backend uses the `cors` middleware to accept requests from the frontend's origin (`CLIENT_URL`).
+1.  **CORS Configuration**: The backend `index.ts` is configured to allow requests from the `CLIENT_URL` defined in the environment variables.
+2.  **API URL**: The frontend uses `import.meta.env.VITE_API_URL` to point to the Express server.
+3.  **Authentication**: Tokens received upon login/registration are stored in `localStorage` and automatically attached to the `Authorization: Bearer <token>` header of every request via an Axios interceptor (`src/services/api.ts`).
+4.  **Static Files**: Images and videos uploaded to the backend are served from the `uploads/` directory, which the frontend resolves using a utility function to handle both local and external paths.
 
 ---
 
-## 🚀 Local Development Setup
+## 📂 Project Structure
 
-Follow these steps to get both the frontend and backend running locally.
+```text
+final-project/
+├── lms-back-end/           # Node.js + Express API
+│   ├── src/
+│   │   ├── controllers/    # Business logic
+│   │   ├── models/         # Mongoose schemas
+│   │   ├── routes/         # Express routes
+│   │   ├── middleware/     # Auth & Role verification
+│   │   └── seeder.ts       # Database population script
+│   └── uploads/            # Local media storage
+└── lms-front-end/          # React + Vite Client
+    ├── src/
+    │   ├── components/     # UI, Layout, Shared components
+    │   ├── context/        # Auth & Global state
+    │   ├── pages/          # Role-specific views
+    │   ├── services/       # API integration layers
+    │   └── hooks/          # Progress & Video logic
+    └── public/             # Static assets
+```
 
-### 1. Prerequisites
+---
 
-* Node.js (v18+ recommended)
-* MongoDB running locally or a MongoDB Atlas connection string.
+## 🛡️ Security Implementation
+*   **Password Hashing**: Passwords are never stored in plain text; `bcryptjs` is used with 10 salt rounds.
+*   **JWT Protection**: All sensitive routes require a valid token.
+*   **RBAC Middleware**: Granular access control ensures Students cannot access Instructor Studio, and only Admins can manage global settings.
+*   **Data Sanitization**: Backend prevents password leaking by stripping sensitive fields before returning user objects.
+
+---
+
+## 📝 License
+This project was developed as a final capstone for the Hunarmand Punjab Program.
