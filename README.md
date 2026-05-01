@@ -5,7 +5,7 @@ Developed with ❤️ by **[Muhammad Umar](https://www.linkedin.com/in/muhammadu
 Welcome to **Techify LMS**, a premium, production-ready Learning Management System engineered meticulously to exceed real-world industry standards. This platform is a complete Full Stack MERN application, demonstrating mastery of React.js, Node.js, Express, MongoDB, and modern software design patterns.
 
 - **[Live Front-End](https://techify-frontend-swart.vercel.app)**
-- **[Live Back-End](https://techify-backend.vercel.app)**
+- **[Live Back-End](https://techify-backend.vercel.app/health)**
 ---
 
 ## 🌟 Executive Summary
