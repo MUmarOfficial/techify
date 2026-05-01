@@ -66,44 +66,46 @@ Since you started the backend with an empty database, it automatically seeded th
 
 ## 🚀 How to Setup Deployment (100% Free)
 
-You can easily deploy this entire stack for free using **Render** (for the backend) and **Vercel** (for the frontend). 
+You can easily deploy this entire stack for free using **Vercel** for both the frontend and backend. The backend has been architected specifically for Vercel Serverless Functions!
 
-### Step 1: Database Setup (MongoDB Atlas)
-1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) and create a free shared cluster.
-2. Under "Database Access", create a user and password.
-3. Under "Network Access", allow IP access from anywhere (`0.0.0.0/0`).
-4. Click "Connect" -> "Connect your application" and copy your connection string.
+### Step 1: Database & File Storage Setup
+1. **Database**: Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) and create a free shared cluster. Allow IP access from anywhere (`0.0.0.0/0`) and copy your connection string.
+2. **File Storage**: Because Vercel has a read-only file system, the backend natively integrates with Cloudinary for image and video uploads. Go to [Cloudinary](https://cloudinary.com/) and create a free account. Copy your Cloud Name, API Key, and API Secret.
 
-### Step 2: Backend Deployment (Render.com)
+### Step 2: Backend Deployment (Vercel)
 1. Push your entire repository to GitHub.
-2. Go to [Render](https://render.com/), sign in, and click **New -> Web Service**.
+2. Go to [Vercel](https://vercel.com/), sign in, and click **Add New -> Project**.
 3. Connect your GitHub repository.
 4. Settings:
    - **Root Directory**: `lms-back-end`
-   - **Environment**: `Node`
-   - **Build Command**: `npm install && npm run build`
-   - **Start Command**: `npm run start`
+   - **Framework Preset**: `Other` (Vercel will automatically detect `vercel.json`)
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
 5. Add Environment Variables:
    - `MONGO_URI`: *<Paste your MongoDB Atlas connection string>*
    - `JWT_SECRET`: *<Create a secure random string>*
-   - `CLIENT_URL`: *<We will update this after Vercel deployment, for now put `https://your-future-vercel-url.vercel.app`>*
-6. Click **Deploy Web Service**. Render will build and deploy your API. Note the public URL Render gives you (e.g., `https://lms-backend-xyz.onrender.com`).
+   - `CLIENT_URL`: *<We will update this after Frontend deployment, for now put `https://your-future-vercel-url.vercel.app`>*
+   - `VERCEL`: `1`
+   - `CLOUDINARY_CLOUD_NAME`: *<From Cloudinary Dashboard>*
+   - `CLOUDINARY_API_KEY`: *<From Cloudinary Dashboard>*
+   - `CLOUDINARY_API_SECRET`: *<From Cloudinary Dashboard>*
+6. Click **Deploy**. Vercel will build and deploy your Serverless API. Note the public URL (e.g., `https://lms-backend-xyz.vercel.app`).
 
 *Note: Because we added the auto-seeder, the very first time this spins up, it will connect to your empty MongoDB cluster and populate it with all 20 courses and users automatically!*
 
-### Step 3: Frontend Deployment (Vercel.com)
-1. Go to [Vercel](https://vercel.com/) and click **Add New -> Project**.
-2. Connect your GitHub repository.
+### Step 3: Frontend Deployment (Vercel)
+1. Go back to your Vercel Dashboard and click **Add New -> Project**.
+2. Connect the exact same GitHub repository.
 3. Settings:
    - **Root Directory**: `lms-front-end`
    - **Framework Preset**: `Vite`
    - **Build Command**: `npm run build`
    - **Output Directory**: `dist`
 4. Add Environment Variables:
-   - `VITE_API_URL`: *<Paste your Render Backend URL, e.g., `https://lms-backend-xyz.onrender.com/api`>*
+   - `VITE_API_URL`: *<Paste your Backend URL, e.g., `https://lms-backend-xyz.vercel.app/api`>*
 5. Click **Deploy**. Vercel will build and host your frontend globally.
 
 ### Step 4: Finalize Connection
-Go back to your Render Dashboard (Backend) and update your `CLIENT_URL` environment variable to match your new Vercel frontend URL exactly (e.g., `https://techify-lms.vercel.app`). Restart the Render service.
+Go back to your Backend project in Vercel, navigate to **Settings -> Environment Variables**, and update your `CLIENT_URL` to match your new frontend URL exactly (e.g., `https://techify-lms.vercel.app`). Go to **Deployments** and click **Redeploy** so the new variable takes effect.
 
 You are now live!
