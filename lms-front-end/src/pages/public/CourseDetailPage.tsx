@@ -42,8 +42,13 @@ export default function CourseDetailPage() {
 
           if (found) {
             setEnrollment(found);
-            const lessonData = await getLessonsByCourse(id);
-            setLessons(lessonData);
+            if (found.paymentStatus === 'completed') {
+              const lessonData = await getLessonsByCourse(id);
+              setLessons(lessonData);
+            } else {
+              const previewLessons = await getCourseLessonsPreview(id);
+              setLessons(previewLessons);
+            }
           } else {
             // Not enrolled - show preview
             const previewLessons = await getCourseLessonsPreview(id);
@@ -68,13 +73,14 @@ export default function CourseDetailPage() {
     if (!isAuthenticated) return navigate('/login');
     if (!id) return;
 
+    if (enrollment?.paymentStatus === 'pending') {
+      return navigate(`/checkout/${enrollment._id}`);
+    }
+
     setEnrolling(true);
     try {
       const newEnrollment = await enrollCourse(id);
-      setEnrollment(newEnrollment);
-      const lessonData = await getLessonsByCourse(id);
-      setLessons(lessonData);
-      addToast('success', 'Successfully enrolled!');
+      navigate(`/checkout/${newEnrollment._id}`);
     } catch {
       addToast('error', 'Enrollment failed. Please try again.');
     } finally {
@@ -146,7 +152,7 @@ export default function CourseDetailPage() {
               </div>
             </div>
 
-            {enrollment && (
+            {enrollment?.paymentStatus === 'completed' && (
               <div className="space-y-12">
                 <ProgressBar value={enrollment.progress} />
                 {lessons.length > 0 ? (
@@ -166,7 +172,7 @@ export default function CourseDetailPage() {
               </div>
             )}
 
-            {!enrollment && lessons.length > 0 && (
+            {enrollment?.paymentStatus !== 'completed' && lessons.length > 0 && (
               <div className="space-y-8">
                 <div>
                   <h2 className="font-heading text-2xl text-charcoal mb-6">Course Curriculum Preview</h2>
@@ -180,10 +186,10 @@ export default function CourseDetailPage() {
               </div>
             )}
 
-            {!enrollment && lessons.length === 0 && (
+            {enrollment?.paymentStatus !== 'completed' && lessons.length === 0 && (
               <div className="border border-charcoal/10 p-8 text-center">
                 <Lock size={24} strokeWidth={1} className="text-warm-grey mx-auto mb-3" />
-                <p className="text-sm text-warm-grey">Enroll to access all lessons</p>
+                <p className="text-sm text-warm-grey">Enroll and complete payment to access all lessons</p>
               </div>
             )}
           </div>
@@ -248,9 +254,10 @@ function EnrollmentCard({
   userRole?: string;
 }>) {
   const buttonText = (() => {
-    if (enrolling) return 'Enrolling...';
+    if (enrolling) return 'Processing...';
     if (!isAuthenticated) return 'Sign in to Enroll';
     if (userRole !== 'student') return 'Students Only';
+    if (enrollment?.paymentStatus === 'pending') return 'Complete Payment';
     return 'Enroll Now';
   })();
 
@@ -263,7 +270,7 @@ function EnrollmentCard({
         </span>
       </div>
 
-      {enrollment ? (
+      {enrollment?.paymentStatus === 'completed' ? (
         <div className="space-y-4">
           <div className="bg-taupe/40 px-5 py-3 text-center">
             <p className="text-label text-charcoal">You're enrolled</p>

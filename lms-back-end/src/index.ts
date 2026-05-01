@@ -6,6 +6,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import pkg from '../package.json' with { type: 'json' };
+import { connectDB } from './config/db.js';
+import { ENV } from './config/env.js';
+import { errorMiddleware } from './middleware/error.middleware.js';
+import { User } from './models/User.model.js';
 // Routes
 import authRoutes from './routes/auth.routes.js';
 import categoryRoutes from './routes/category.routes.js';
@@ -15,10 +19,6 @@ import lessonRoutes from './routes/lesson.routes.js';
 import progressRoutes from './routes/progress.routes.js';
 import statsRoutes from './routes/stats.routes.js';
 import userRoutes from './routes/user.routes.js';
-import { connectDB } from './config/db.js';
-import { ENV } from './config/env.js';
-import { errorMiddleware } from './middleware/error.middleware.js';
-import { User } from './models/User.model.js';
 import { seedData } from './seeder.js';
 import { log } from './utils/logger.js';
 
@@ -30,7 +30,16 @@ app.use(async (req, res, next) => {
 });
 
 // Middleware
-app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://techify-frontend-swart.vercel.app',
+];
+if (ENV.CLIENT_URL && !allowedOrigins.includes(ENV.CLIENT_URL)) {
+  // If the env variable is missing https://, we can add it, but it's safer to just push it and the explicit https url
+  allowedOrigins.push(ENV.CLIENT_URL);
+}
+
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json({ limit: ENV.MAX_JSON_PAYLOAD }));
 app.use(express.urlencoded({ extended: true, limit: ENV.MAX_JSON_PAYLOAD }));
 

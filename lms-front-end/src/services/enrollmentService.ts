@@ -1,23 +1,49 @@
-import api from './api';
-import type { Enrollment, ApiResponse, ProgressUpdate, ProgressData } from '../types';
+import api from "./api";
+import type {
+  Enrollment,
+  ApiResponse,
+  ProgressUpdate,
+  ProgressData,
+} from "../types";
 
 export const enrollCourse = async (courseId: string): Promise<Enrollment> => {
-  const res = await api.post<ApiResponse<Enrollment>>('/enrollments', { courseId });
+  const res = await api.post<ApiResponse<Enrollment>>("/enrollments", {
+    courseId,
+  });
   return res.data.data;
 };
 
 export const getMyCourses = async (): Promise<Enrollment[]> => {
-  const res = await api.get<ApiResponse<Enrollment[]>>('/enrollments/my-courses');
+  const res = await api.get<ApiResponse<Enrollment[]>>(
+    "/enrollments/my-courses",
+  );
   return res.data.data;
 };
 
-export const updateProgress = async (id: string, progress: number): Promise<Enrollment> => {
-  const res = await api.patch<ApiResponse<Enrollment>>(`/enrollments/${id}/progress`, { progress });
+export const updateProgress = async (
+  id: string,
+  progress: number,
+): Promise<Enrollment> => {
+  const res = await api.patch<ApiResponse<Enrollment>>(
+    `/enrollments/${id}/progress`,
+    { progress },
+  );
+  return res.data.data;
+};
+
+export const processPayment = async (
+  enrollmentId: string,
+  paymentDetails: { cardholderName: string; last4Digits: string },
+): Promise<Enrollment> => {
+  const res = await api.post<ApiResponse<Enrollment>>(
+    `/enrollments/${enrollmentId}/pay`,
+    paymentDetails,
+  );
   return res.data.data;
 };
 
 export const getAllEnrollments = async (): Promise<Enrollment[]> => {
-  const res = await api.get<ApiResponse<Enrollment[]>>('/enrollments/all');
+  const res = await api.get<ApiResponse<Enrollment[]>>("/enrollments/all");
   return res.data.data;
 };
 
@@ -26,10 +52,13 @@ export const markLessonComplete = async (
   enrollmentId: string,
   lessonId: string,
 ): Promise<Enrollment> => {
-  const res = await api.post<ApiResponse<Enrollment>>('/progress/complete-lesson', {
-    enrollmentId,
-    lessonId,
-  });
+  const res = await api.post<ApiResponse<Enrollment>>(
+    "/progress/complete-lesson",
+    {
+      enrollmentId,
+      lessonId,
+    },
+  );
   return res.data.data;
 };
 
@@ -38,15 +67,22 @@ export const updateWatchProgress = async (
   lessonId: string,
   percentage: number,
 ): Promise<ProgressUpdate> => {
-  const res = await api.patch<ApiResponse<ProgressUpdate>>('/progress/watch-progress', {
-    enrollmentId,
-    lessonId,
-    percentage,
-  });
+  const res = await api.patch<ApiResponse<ProgressUpdate>>(
+    "/progress/watch-progress",
+    {
+      enrollmentId,
+      lessonId,
+      percentage,
+    },
+  );
   return res.data.data;
 };
 
-export const getProgress = async (enrollmentId: string): Promise<ProgressData> => {
-  const res = await api.get<ApiResponse<ProgressData>>(`/progress/${enrollmentId}`);
+export const getProgress = async (
+  enrollmentId: string,
+): Promise<ProgressData> => {
+  const res = await api.get<ApiResponse<ProgressData>>(
+    `/progress/${enrollmentId}`,
+  );
   return res.data.data;
 };

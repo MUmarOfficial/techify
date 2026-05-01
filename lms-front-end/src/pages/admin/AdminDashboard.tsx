@@ -22,11 +22,11 @@ export default function AdminDashboard() {
 
   const statItems = stats
     ? [
-        { label: 'Total Users', value: stats.totalUsers.value, trend: stats.totalUsers.trend, change: stats.totalUsers.change, icon: Users },
-        { label: 'Total Courses', value: stats.totalCourses.value, trend: stats.totalCourses.trend, change: stats.totalCourses.change, icon: BookOpen },
-        { label: 'Enrollments', value: stats.totalEnrollments.value, trend: stats.totalEnrollments.trend, change: stats.totalEnrollments.change, icon: GraduationCap },
-        { label: 'Instructors', value: stats.totalInstructors.value, trend: stats.totalInstructors.trend, change: stats.totalInstructors.change, icon: TrendingUp },
-      ]
+      { label: 'Total Users', value: stats.totalUsers.value, trend: stats.totalUsers.trend, change: stats.totalUsers.change, icon: Users },
+      { label: 'Total Courses', value: stats.totalCourses.value, trend: stats.totalCourses.trend, change: stats.totalCourses.change, icon: BookOpen },
+      { label: 'Enrollments', value: stats.totalEnrollments.value, trend: stats.totalEnrollments.trend, change: stats.totalEnrollments.change, icon: GraduationCap },
+      { label: 'Instructors', value: stats.totalInstructors.value, trend: stats.totalInstructors.trend, change: stats.totalInstructors.change, icon: TrendingUp },
+    ]
     : [];
 
   const quickLinks = [

@@ -186,10 +186,10 @@ export default function ManageCoursesPage() {
       {/* Edit Modal */}
       <Modal isOpen={!!editCourse} onClose={() => setEditCourse(null)} title="Edit Course">
         <form onSubmit={handleSubmit(onSave)} className="space-y-6">
-          <Input 
-            label="Title" 
+          <Input
+            label="Title"
             id="edit-title"
-            {...register('title', { required: true })} 
+            {...register('title', { required: true })}
           />
           <div>
             <span className="text-label text-warm-grey block mb-2">Category</span>
@@ -200,11 +200,11 @@ export default function ManageCoursesPage() {
               {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
-          <Input 
-            label="Price (USD)" 
-            type="number" 
+          <Input
+            label="Price (USD)"
+            type="number"
             id="edit-price"
-            {...register('price', { required: true, min: 0 })} 
+            {...register('price', { required: true, min: 0 })}
           />
           <div className="flex gap-3 pt-2">
             <button

@@ -107,11 +107,10 @@ export default function ManageUsersPage() {
             <button
               key={r}
               onClick={() => setFilter(r)}
-              className={`px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] transition-all duration-300 cursor-pointer ${
-                filter === r
+              className={`px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] transition-all duration-300 cursor-pointer ${filter === r
                   ? 'bg-charcoal text-white'
                   : 'border border-charcoal/20 text-warm-grey hover:border-charcoal hover:text-charcoal'
-              }`}
+                }`}
             >
               {r}
             </button>
@@ -190,9 +189,8 @@ export default function ManageUsersPage() {
                   {...regRole('role')}
                 />
                 <div
-                  className={`py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-center transition-all duration-300 ${
-                    newRole === r ? 'bg-charcoal text-white' : 'border border-charcoal/20 text-warm-grey hover:border-charcoal'
-                  }`}
+                  className={`py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-center transition-all duration-300 ${newRole === r ? 'bg-charcoal text-white' : 'border border-charcoal/20 text-warm-grey hover:border-charcoal'
+                    }`}
                 >
                   {r}
                 </div>

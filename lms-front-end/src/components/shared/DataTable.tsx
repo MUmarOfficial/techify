@@ -52,12 +52,12 @@ export default function DataTable<T>({
                 <td key={col.key} className="py-4 px-4 text-sm text-charcoal">
                   {col.render
                     ? col.render(item)
-                    : (function() {
-                        const val = (item as Record<string, unknown>)[col.key];
-                        if (typeof val === 'string') return val;
-                        if (typeof val === 'number' || typeof val === 'boolean') return val.toString();
-                        return '';
-                      })()}
+                    : (function () {
+                      const val = (item as Record<string, unknown>)[col.key];
+                      if (typeof val === 'string') return val;
+                      if (typeof val === 'number' || typeof val === 'boolean') return val.toString();
+                      return '';
+                    })()}
                 </td>
               ))}
             </tr>

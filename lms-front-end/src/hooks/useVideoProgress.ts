@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { updateWatchProgress } from '../services/enrollmentService';
+import { useCallback, useEffect, useRef, useState } from "react";
+import { updateWatchProgress } from "../services/enrollmentService";
 
 export const useVideoProgress = (enrollmentId?: string, lessonId?: string) => {
   const [watchPercentage, setWatchPercentage] = useState(0);
@@ -15,14 +15,18 @@ export const useVideoProgress = (enrollmentId?: string, lessonId?: string) => {
     const now = Date.now();
 
     // Mark as complete when video reaches 95%
-    const shouldMarkComplete = percentage >= 95 && !isWatchComplete && !isUpdating && now - lastUpdateRef.current > 1000;
+    const shouldMarkComplete =
+      percentage >= 95 &&
+      !isWatchComplete &&
+      !isUpdating &&
+      now - lastUpdateRef.current > 1000;
     if (shouldMarkComplete) {
       setIsUpdating(true);
       try {
         await updateWatchProgress(enrollmentId, lessonId, percentage);
         setIsWatchComplete(true);
       } catch (error) {
-        console.error('Failed to update watch progress:', error);
+        console.error("Failed to update watch progress:", error);
       } finally {
         setIsUpdating(false);
         lastUpdateRef.current = now;
@@ -31,14 +35,17 @@ export const useVideoProgress = (enrollmentId?: string, lessonId?: string) => {
     }
 
     // Update every 10% for regular progress
-    const shouldUpdateProgress = percentage % 10 === 0 && now - lastUpdateRef.current > 5000 && !isUpdating;
+    const shouldUpdateProgress =
+      percentage % 10 === 0 &&
+      now - lastUpdateRef.current > 5000 &&
+      !isUpdating;
     if (shouldUpdateProgress) {
       setWatchPercentage(percentage);
       setIsUpdating(true);
       try {
         await updateWatchProgress(enrollmentId, lessonId, percentage);
       } catch (error) {
-        console.error('Failed to update watch progress:', error);
+        console.error("Failed to update watch progress:", error);
       } finally {
         setIsUpdating(false);
         lastUpdateRef.current = now;

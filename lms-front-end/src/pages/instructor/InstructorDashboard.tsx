@@ -97,25 +97,25 @@ export default function InstructorDashboard() {
           {loading
             ? ['sk-c1', 'sk-c2', 'sk-c3'].map((id) => <Skeleton key={id} variant="rect" className="h-20" />)
             : courses.map((course, i) => (
-                <motion.div
-                  key={course._id}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: i * 0.07 }}
-                  className="flex items-center justify-between p-5 border border-charcoal/10 hover:border-gold/30 transition-colors duration-300"
+              <motion.div
+                key={course._id}
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.07 }}
+                className="flex items-center justify-between p-5 border border-charcoal/10 hover:border-gold/30 transition-colors duration-300"
+              >
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-charcoal truncate">{course.title}</p>
+                  <p className="text-xs text-warm-grey mt-0.5">{course.category}</p>
+                </div>
+                <Link
+                  to={ROUTES.DASHBOARD.INSTRUCTOR.LESSONS(course._id)}
+                  className="text-label text-warm-grey hover:text-gold transition-colors duration-300 shrink-0 ml-6"
                 >
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium text-charcoal truncate">{course.title}</p>
-                    <p className="text-xs text-warm-grey mt-0.5">{course.category}</p>
-                  </div>
-                  <Link
-                    to={ROUTES.DASHBOARD.INSTRUCTOR.LESSONS(course._id)}
-                    className="text-label text-warm-grey hover:text-gold transition-colors duration-300 shrink-0 ml-6"
-                  >
-                    Lessons →
-                  </Link>
-                </motion.div>
-              ))}
+                  Lessons →
+                </Link>
+              </motion.div>
+            ))}
         </div>
       </div>
     </div>

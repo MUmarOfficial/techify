@@ -16,7 +16,7 @@ import type { Course, Lesson, Enrollment } from '../../types';
 export default function WatchCoursePage() {
   const { courseId } = useParams<{ courseId: string }>();
   const navigate = useNavigate();
-  
+
   const [course, setCourse] = useState<Course | null>(null);
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
@@ -54,17 +54,17 @@ export default function WatchCoursePage() {
           getLessonsByCourse(courseId),
           getMyCourses(),
         ]);
-        
+
         setCourse(courseData);
         setLessons(lessonsData);
-        
+
         // Find enrollment for this course
         const currentEnrollment = enrollmentsData.find((e) => {
           const c = e.course as { _id?: string } | string;
           return typeof c === 'object' && c._id === courseId || c === courseId;
         });
         setEnrollment(currentEnrollment || null);
-        
+
         // Set first lesson or last accessed lesson
         if (lessonsData.length > 0) {
           const lastAccessedId = currentEnrollment?.lastAccessedLesson;
@@ -138,16 +138,16 @@ export default function WatchCoursePage() {
       {/* Main Content */}
       <div className="flex-1">
         <div className="mb-6">
-          <button 
+          <button
             onClick={() => navigate(ROUTES.DASHBOARD.STUDENT.MY_COURSES)}
             className="flex items-center gap-2 text-label text-warm-grey hover:text-charcoal transition-colors mb-4"
           >
             <ChevronLeft size={16} />
             Back to Learning
           </button>
-          
-          <VideoPlayer 
-            url={selectedLesson?.videoUrl} 
+
+          <VideoPlayer
+            url={selectedLesson?.videoUrl}
             thumbnail={selectedLesson?.thumbnail}
             onProgress={videoProgress.handleProgress}
             onEnded={videoProgress.handleVideoEnded}
@@ -243,7 +243,7 @@ export default function WatchCoursePage() {
               </div>
             )}
           </div>
-          
+
           <div className="max-h-[60vh] overflow-y-auto">
             {lessons.map((lesson) => {
               const isActive = selectedLesson?._id === lesson._id;
@@ -254,9 +254,8 @@ export default function WatchCoursePage() {
                 <button
                   key={lesson._id}
                   onClick={() => setSelectedLesson(lesson)}
-                  className={`w-full flex items-start gap-4 p-5 text-left transition-colors border-b border-charcoal/5 last:border-0 ${
-                    isActive ? 'bg-gold/5 border-l-4 border-l-gold' : 'hover:bg-charcoal/5'
-                  }`}
+                  className={`w-full flex items-start gap-4 p-5 text-left transition-colors border-b border-charcoal/5 last:border-0 ${isActive ? 'bg-gold/5 border-l-4 border-l-gold' : 'hover:bg-charcoal/5'
+                    }`}
                 >
                   <div className={`mt-1 shrink-0 ${getStatusColor(isCompleted, isActive)}`}>
                     {isCompleted ? (

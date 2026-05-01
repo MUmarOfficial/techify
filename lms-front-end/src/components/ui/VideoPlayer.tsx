@@ -10,11 +10,11 @@ interface VideoPlayerProps {
   onEnded?: () => void;
 }
 
-export default function VideoPlayer({ 
-  url, 
-  thumbnail, 
+export default function VideoPlayer({
+  url,
+  thumbnail,
   onProgress,
-  onEnded 
+  onEnded
 }: Readonly<VideoPlayerProps>) {
   const mediaUrl = getMediaUrl(url);
   const thumbUrl = getMediaUrl(thumbnail);

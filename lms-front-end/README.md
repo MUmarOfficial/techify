@@ -1,49 +1,68 @@
-# Techify LMS - Frontend Client
+# 🎨 Techify LMS - Frontend Application
 
-This is the frontend client for the Techify LMS platform, built with React 19, TypeScript, Vite, Tailwind CSS, and Framer Motion. It provides three dedicated, highly aesthetic dashboards for Students, Instructors, and Admins.
+Developed by **[Muhammad Umar](https://www.linkedin.com/in/muhammadumarofficial/)**
 
-## Features
+Welcome to the frontend repository for **Techify LMS**. This React-based single-page application (SPA) is engineered to deliver a flawless, premium user experience reflecting top-tier SaaS industry standards.
 
-- **Modern Architecture**: Uses React Router v7, React Hook Form, and Framer Motion for a seamless, SPA experience.
-- **Video & Progress Tracking**: Integrated `react-player` and intelligent hooks to track YouTube/MP4 watch percentages and natively prevent users from skipping ahead before marking a lesson as complete.
-- **Responsive Layout**: Completely mobile-first and fully responsive across all devices using Tailwind CSS.
-- **Editorial UI**: Features a sleek, modern aesthetic heavily utilizing glassmorphism, precise typography, and carefully chosen color palettes.
+---
 
-## Local Setup
+## 🚀 Key Technologies & Architecture
 
-### Installation
+- **React 19 & React Compiler**: Latest React paradigms with automatic performance optimization.
+- **React Router v7**: Advanced client-side routing for public and protected dashboards.
+- **Axios Interceptors**: Global request handling for seamless JWT authorization.
+- **Tailwind CSS & Framer Motion**: Editorial-grade UI with smooth animations.
 
-```bash
-npm install
+---
+
+## 💎 Standout UI Features
+
+### 🎬 Intelligent Custom Video Player
+- **Watch Time Tracking**: Granularly monitors student engagement.
+- **95% Completion Logic**: Ensures students consume content before marking as complete.
+
+### 💳 Simulated Checkout & Interactive Forms
+- **Dynamic Credit Card UI**: Beautiful checkout experience with real-time formatting.
+- **Zod Validation**: Strict data integrity on all form submissions.
+
+### 🃏 Glassmorphism Course Cards
+- Stunning interactive cards with hover states and structural shifts.
+
+---
+
+## 🎯 Dedicated Role Dashboards
+
+### 🛡 Admin Dashboard
+- User management data grids and platform-wide analytics view.
+
+### 👨‍🏫 Instructor Dashboard
+- Multi-step course creation studio and media upload center.
+
+### 🎓 Student Experience
+- Personalized learning hub, immersive catalog, and progress tracking.
+
+---
+
+## 🏗 Project Structure (Frontend)
+
+```text
+├── src/
+│   ├── components/   # Reusable UI & Layouts
+│   ├── context/      # Global State (Auth, Toast)
+│   ├── hooks/        # Custom React Logic
+│   ├── pages/        # View Components
+│   ├── services/     # API Client (Axios)
+│   ├── App.tsx       # Main Entry & Routing
+│   └── main.tsx      # DOM Rendering
 ```
 
-### Environment Variables
+---
 
-Create a `.env` file in this directory:
+## ⚙️ Running Locally
 
-```env
-# Point this to your backend server
-VITE_API_URL=http://localhost:5000/api
-```
+1. **Install dependencies**: `npm install`
+2. **Environment Variables**: Create `.env` with `VITE_API_URL=http://localhost:5000/api`
+3. **Start Server**: `npm run dev`
 
-### Development Server
-
-Run the local development server:
-
-```bash
-npm run dev
-```
-
-### Build for Production
-
-To create a highly optimized production build:
-
-```bash
-npm run build
-```
-
-The output will be placed in the `dist` directory.
-
-## Deployment Notes
-- When deploying to **Vercel** or **Netlify**, ensure that your build command is set to `npm run build` and output directory is `dist`.
-- Always set `VITE_API_URL` to your production backend URL *before* building.
+---
+Developed by **[Muhammad Umar](https://www.linkedin.com/in/muhammadumarofficial/)** 🚀

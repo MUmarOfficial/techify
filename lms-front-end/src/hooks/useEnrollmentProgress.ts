@@ -1,5 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
-import { markLessonComplete as markLessonCompleteAPI, getProgress } from '../services/enrollmentService';
+import { useCallback, useEffect, useState } from "react";
+import {
+  markLessonComplete as markLessonCompleteAPI,
+  getProgress,
+} from "../services/enrollmentService";
 
 export interface LessonProgress {
   _id: string;
@@ -35,9 +38,9 @@ export const useEnrollmentProgress = (enrollmentId?: string) => {
       setProgressData(data as unknown as ProgressData);
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : 'Failed to fetch progress';
+        err instanceof Error ? err.message : "Failed to fetch progress";
       setError(errorMessage);
-      console.error('Failed to fetch progress:', err);
+      console.error("Failed to fetch progress:", err);
     } finally {
       setLoading(false);
     }
@@ -49,10 +52,7 @@ export const useEnrollmentProgress = (enrollmentId?: string) => {
 
     try {
       setError(null);
-      const result = await markLessonCompleteAPI(
-        enrollmentId,
-        lessonId,
-      );
+      const result = await markLessonCompleteAPI(enrollmentId, lessonId);
 
       // Update local state with new progress
       setProgressData((prev) => {
@@ -80,9 +80,9 @@ export const useEnrollmentProgress = (enrollmentId?: string) => {
       return result;
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : 'Failed to mark lesson complete';
+        err instanceof Error ? err.message : "Failed to mark lesson complete";
       setError(errorMessage);
-      console.error('Failed to mark lesson complete:', err);
+      console.error("Failed to mark lesson complete:", err);
       throw err;
     }
   };

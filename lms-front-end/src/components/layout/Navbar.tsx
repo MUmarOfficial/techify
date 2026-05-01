@@ -51,8 +51,7 @@ export default function Navbar() {
                 to={link.to}
                 end={link.to === ROUTES.HOME}
                 className={({ isActive }) =>
-                  `text-label transition-colors duration-300 ${
-                    isActive ? 'text-gold' : 'text-warm-grey hover:text-charcoal'
+                  `text-label transition-colors duration-300 ${isActive ? 'text-gold' : 'text-warm-grey hover:text-charcoal'
                   }`
                 }
               >

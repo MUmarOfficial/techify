@@ -2,11 +2,10 @@ export interface User {
   _id: string;
   name: string;
   email: string;
-  role: 'student' | 'instructor' | 'admin';
+  role: "student" | "instructor" | "admin";
   avatar?: string;
   createdAt: string;
 }
-
 
 export interface Course {
   _id: string;
@@ -34,7 +33,6 @@ export interface Lesson {
   order: number;
 }
 
-
 export interface Enrollment {
   _id: string;
   student: User | string;
@@ -42,6 +40,9 @@ export interface Enrollment {
   progress: number;
   enrolledAt: string;
   createdAt?: string;
+  paymentStatus: "pending" | "completed" | "failed";
+  paymentMethod?: string;
+  transactionId?: string;
   completedLessons?: string[];
   lastAccessedLesson?: string;
   videoWatchProgress?: Array<{
@@ -66,7 +67,7 @@ export interface RegisterPayload {
   name: string;
   email: string;
   password: string;
-  role?: 'student' | 'instructor';
+  role?: "student" | "instructor";
 }
 
 export interface ApiResponse<T> {
@@ -77,7 +78,7 @@ export interface ApiResponse<T> {
 
 export interface ToastMessage {
   id: string;
-  type: 'success' | 'error' | 'info';
+  type: "success" | "error" | "info";
   message: string;
 }
 

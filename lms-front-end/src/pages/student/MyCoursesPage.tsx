@@ -96,8 +96,8 @@ export default function MyCoursesPage() {
 
                     <p className="text-xs text-warm-grey mb-4 uppercase tracking-widest">{course.category}</p>
                     <ProgressBar value={enrollment.progress} />
-                    
-                    <Link 
+
+                    <Link
                       to={ROUTES.DASHBOARD.STUDENT.WATCH(course._id)}
                       className="mt-6 w-full h-10 border border-charcoal text-charcoal text-label flex items-center justify-center hover:bg-charcoal hover:text-white transition-colors duration-300"
                     >

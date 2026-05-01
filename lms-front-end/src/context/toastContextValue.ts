@@ -1,9 +1,9 @@
-import { createContext } from 'react';
-import type { ToastMessage } from '../types';
+import { createContext } from "react";
+import type { ToastMessage } from "../types";
 
 export interface ToastContextType {
   toasts: ToastMessage[];
-  addToast: (type: ToastMessage['type'], message: string) => void;
+  addToast: (type: ToastMessage["type"], message: string) => void;
   removeToast: (id: string) => void;
 }
 

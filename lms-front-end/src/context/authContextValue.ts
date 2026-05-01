@@ -1,5 +1,5 @@
-import { createContext } from 'react';
-import type { AuthState, LoginPayload, RegisterPayload, User } from '../types';
+import { createContext } from "react";
+import type { AuthState, LoginPayload, RegisterPayload, User } from "../types";
 
 export interface AuthContextType extends AuthState {
   login: (payload: LoginPayload) => Promise<void>;
@@ -9,4 +9,3 @@ export interface AuthContextType extends AuthState {
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
-

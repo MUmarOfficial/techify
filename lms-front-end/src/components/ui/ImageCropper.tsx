@@ -103,9 +103,9 @@ export default function ImageCropper({ isOpen, image, onClose, onCrop, aspectRat
     if (!imageRef.current || !containerRef.current) return;
 
     const canvas = document.createElement('canvas');
-    const baseWidth = 400; 
+    const baseWidth = 400;
     const baseHeight = baseWidth / aspectRatio;
-    
+
     canvas.width = baseWidth;
     canvas.height = baseHeight;
     const ctx = canvas.getContext('2d');
@@ -119,7 +119,7 @@ export default function ImageCropper({ isOpen, image, onClose, onCrop, aspectRat
     // The viewport size relative to container
     const viewportWidth = containerRect.width * 0.8;
     const viewportHeight = viewportWidth / aspectRatio;
-    
+
     const viewportX = containerRect.left + (containerRect.width / 2) - (viewportWidth / 2);
     const viewportY = containerRect.top + (containerRect.height / 2) - (viewportHeight / 2);
 
@@ -145,7 +145,7 @@ export default function ImageCropper({ isOpen, image, onClose, onCrop, aspectRat
     <Modal isOpen={isOpen} onClose={onClose} title={shape === 'circle' ? 'Crop Profile Picture' : 'Crop Thumbnail'}>
 
       <div className="space-y-6">
-        <button 
+        <button
           type="button"
           ref={containerRef}
           className="relative w-full h-75 bg-charcoal/5 overflow-hidden flex items-center justify-center cursor-move focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2 p-0 border-none appearance-none"
@@ -174,7 +174,7 @@ export default function ImageCropper({ isOpen, image, onClose, onCrop, aspectRat
           {/* Viewport Overlay */}
           <span className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
             {/* Guideline with huge shadow to create the dim effect */}
-            <span 
+            <span
               className={`border-2 border-white shadow-[0_0_0_9999px_rgba(0,0,0,0.5)] z-20 ${shape === 'circle' ? 'rounded-full' : ''}`}
               style={{
                 width: '80%',

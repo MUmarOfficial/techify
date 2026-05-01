@@ -69,11 +69,10 @@ export default function CoursesPage() {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] transition-all duration-300 cursor-pointer ${
-                    activeCategory === cat
+                  className={`px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] transition-all duration-300 cursor-pointer ${activeCategory === cat
                       ? 'bg-charcoal text-white'
                       : 'bg-transparent border border-charcoal/20 text-warm-grey hover:border-charcoal hover:text-charcoal'
-                  }`}
+                    }`}
                 >
                   {cat}
                 </button>

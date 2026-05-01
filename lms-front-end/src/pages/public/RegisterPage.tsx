@@ -160,11 +160,10 @@ export default function RegisterPage() {
                       {...register('role')}
                     />
                     <div
-                      className={`px-4 py-3 border text-xs font-semibold uppercase tracking-[0.15em] text-center transition-all duration-300 ${
-                        selectedRole === role
+                      className={`px-4 py-3 border text-xs font-semibold uppercase tracking-[0.15em] text-center transition-all duration-300 ${selectedRole === role
                           ? 'bg-charcoal text-white border-charcoal'
                           : 'border-charcoal/20 text-warm-grey hover:border-charcoal hover:text-charcoal'
-                      }`}
+                        }`}
                     >
                       {role}
                     </div>

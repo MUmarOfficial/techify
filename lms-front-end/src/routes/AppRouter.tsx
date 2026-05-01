@@ -17,7 +17,8 @@ import StudentDashboard from '../pages/student/StudentDashboard';
 import MyCoursesPage from '../pages/student/MyCoursesPage';
 import WatchCoursePage from '../pages/student/WatchCoursePage';
 import ProfilePage from '../pages/student/ProfilePage';
-
+import CheckoutPage from '../pages/student/CheckoutPage';
+import PaymentSuccessPage from '../pages/student/PaymentSuccessPage';
 
 // Instructor
 import InstructorDashboard from '../pages/instructor/InstructorDashboard';
@@ -61,6 +62,9 @@ export default function AppRouter() {
             <Route path={ROUTES.DASHBOARD.STUDENT.WATCH(':courseId')} element={<WatchCoursePage />} />
             <Route path={ROUTES.DASHBOARD.STUDENT.PROFILE} element={<ProfilePage />} />
           </Route>
+          {/* Checkout doesn't need the dashboard layout, so it's outside DashboardLayout but inside ProtectedRoute */}
+          <Route path="/checkout/:id" element={<CheckoutPage />} />
+          <Route path="/checkout/:id/success" element={<PaymentSuccessPage />} />
         </Route>
 
         {/* Instructor Dashboard */}

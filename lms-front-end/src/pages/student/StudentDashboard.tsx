@@ -31,10 +31,10 @@ export default function StudentDashboard() {
 
   const statItems = stats
     ? [
-        { label: 'Enrolled Courses', value: stats.enrolledCourses },
-        { label: 'Completed', value: stats.completedCourses },
-        { label: 'In Progress', value: stats.inProgressCourses },
-      ]
+      { label: 'Enrolled Courses', value: stats.enrolledCourses },
+      { label: 'Completed', value: stats.completedCourses },
+      { label: 'In Progress', value: stats.inProgressCourses },
+    ]
     : [];
 
   return (

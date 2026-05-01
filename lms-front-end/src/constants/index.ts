@@ -1,6 +1,6 @@
-export * from './routes';
-export * from './categories';
-export * from './roles';
+export * from "./routes";
+export * from "./categories";
+export * from "./roles";
 
 export const MEDIA_LIMITS = {
   THUMBNAIL_MAX_SIZE: 50 * 1024 * 1024, // 50MB
