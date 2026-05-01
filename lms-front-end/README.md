@@ -1,62 +1,49 @@
-# Techify Client - Luxury Learning Experience
+# Techify LMS - Frontend Client
 
-Techify is a luxury, editorial-inspired frontend for a technical LMS. It is built with **React 19**, **Vite**, and **Tailwind CSS**, prioritizing a high-end aesthetic with smooth user interactions.
+This is the frontend client for the Techify LMS platform, built with React 19, TypeScript, Vite, Tailwind CSS, and Framer Motion. It provides three dedicated, highly aesthetic dashboards for Students, Instructors, and Admins.
 
----
+## Features
 
-## ✨ Key Features
+- **Modern Architecture**: Uses React Router v7, React Hook Form, and Framer Motion for a seamless, SPA experience.
+- **Video & Progress Tracking**: Integrated `react-player` and intelligent hooks to track YouTube/MP4 watch percentages and natively prevent users from skipping ahead before marking a lesson as complete.
+- **Responsive Layout**: Completely mobile-first and fully responsive across all devices using Tailwind CSS.
+- **Editorial UI**: Features a sleek, modern aesthetic heavily utilizing glassmorphism, precise typography, and carefully chosen color palettes.
 
-### 🎨 Luxury Editorial Design
-*   **Palette**: 'Alabaster' background, 'Charcoal' text, and 'Gold' accents.
-*   **Interactions**: Page transitions and modal reveals powered by **Framer Motion**.
-*   **Typography**: Mix of *Playfair Display* (Headings) and *Inter* (Body) for a high-end magazine feel.
+## Local Setup
 
-### 📺 Smart Learning Interface
-*   **Video Engine**: Custom player that communicates with the backend every 10% of progress.
-*   **Lesson Sidebar**: Dynamic curriculum list that updates "Watched" status and completion badges in real-time.
+### Installation
 
-### ✂️ Media Workflow
-*   **Client-Side Cropping**: Integrated **Canvas-based image cropper** allows users to perfectly frame profile pictures and course thumbnails before they are converted to Base64 and sent to the server.
+```bash
+npm install
+```
 
----
+### Environment Variables
 
-## 🛠️ Tech Stack
-*   **Framework**: React 19 (Vite)
-*   **Styling**: Tailwind CSS 4.0
-*   **Icons**: Lucide React
-*   **State**: Context API (Auth, Toast)
-*   **Forms**: React Hook Form
-*   **Networking**: Axios with request/response interceptors
+Create a `.env` file in this directory:
 
----
-
-## 🚀 Local Development
-
-### 1. Environment Setup
-Create a `.env` file in the root:
 ```env
+# Point this to your backend server
 VITE_API_URL=http://localhost:5000/api
 ```
 
-### 2. Installation & Running
+### Development Server
+
+Run the local development server:
+
 ```bash
-npm install
-npm run dev   # Starts Vite server on http://localhost:5173
+npm run dev
 ```
 
----
+### Build for Production
 
-## 🔗 Connecting to Backend
+To create a highly optimized production build:
 
-The client uses an **Axios Interceptor** (`src/services/api.ts`) to handle connectivity:
-1.  **Auth Injection**: It automatically grabs the `lms_token` from `localStorage` and injects it into the `Authorization` header.
-2.  **401 Handling**: If a token expires, the interceptor clears local storage and redirects the user to `/login`.
-3.  **Media Resolution**: A utility `getMediaUrl` handles the mapping of relative server paths (e.g., `/uploads/...`) to absolute URLs using the API base.
+```bash
+npm run build
+```
 
----
+The output will be placed in the `dist` directory.
 
-## 📂 Architecture
-*   **`/components/ui`**: Atomic, reusable luxury components (Buttons, Inputs, Modals).
-*   **`/context`**: Global providers for Authentication and the Toast notification system.
-*   **`/hooks`**: Specialized logic for video progress tracking and enrollment status.
-*   **`/pages`**: Role-based routing for Students, Instructors, and Admins.
+## Deployment Notes
+- When deploying to **Vercel** or **Netlify**, ensure that your build command is set to `npm run build` and output directory is `dist`.
+- Always set `VITE_API_URL` to your production backend URL *before* building.

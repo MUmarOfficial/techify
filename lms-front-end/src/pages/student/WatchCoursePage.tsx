@@ -149,8 +149,7 @@ export default function WatchCoursePage() {
           <VideoPlayer 
             url={selectedLesson?.videoUrl} 
             thumbnail={selectedLesson?.thumbnail}
-            videoRef={videoProgress.videoRef}
-            onTimeUpdate={videoProgress.handleTimeUpdate}
+            onProgress={videoProgress.handleProgress}
             onEnded={videoProgress.handleVideoEnded}
           />
         </div>

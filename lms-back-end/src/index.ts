@@ -62,9 +62,23 @@ app.use(errorMiddleware);
 
 import pkg from '../package.json';
 
+import { User } from './models/User.model';
+import { seedData } from './seeder';
+
 const PORT = Number(ENV.PORT) || 5000;
 connectDB()
-  .then(() => {
+  .then(async () => {
+    // Automated Seeding on first deployment
+    try {
+      const userCount = await User.countDocuments();
+      if (userCount === 0) {
+        log.info('📦 Empty database detected. Running automated seeder...');
+        await seedData(true);
+      }
+    } catch (seedErr) {
+      log.err('Failed to run automated seeder', seedErr);
+    }
+
     app.listen(PORT, () => {
       log.info('=========================================');
       log.info(`🏷️  ${pkg.name} v${pkg.version}`);

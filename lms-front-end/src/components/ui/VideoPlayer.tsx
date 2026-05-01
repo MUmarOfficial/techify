@@ -1,21 +1,19 @@
 import { motion } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
-import type { RefObject } from 'react';
+import ReactPlayer from 'react-player';
 import { getMediaUrl } from '../../utils/url';
 
 interface VideoPlayerProps {
   url?: string;
   thumbnail?: string;
-  videoRef?: RefObject<HTMLVideoElement | null>;
-  onTimeUpdate?: (e: React.SyntheticEvent<HTMLVideoElement>) => void;
-  onEnded?: (e: React.SyntheticEvent<HTMLVideoElement>) => void;
+  onProgress?: (state: { played: number; playedSeconds: number; loaded: number; loadedSeconds: number }) => void;
+  onEnded?: () => void;
 }
 
 export default function VideoPlayer({ 
   url, 
   thumbnail, 
-  videoRef,
-  onTimeUpdate,
+  onProgress,
   onEnded 
 }: Readonly<VideoPlayerProps>) {
   const mediaUrl = getMediaUrl(url);
@@ -35,46 +33,36 @@ export default function VideoPlayer({
     );
   }
 
-  // Check if it's a YouTube URL
-  const getYoutubeId = (url: string) => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = new RegExp(regExp).exec(url);
-    return (match?.[2]?.length === 11) ? match[2] : null;
-  };
-
-  const youtubeId = getYoutubeId(url);
+  // To ensure we properly detect standard mp4 vs youtube
+  const isYoutube = url.includes('youtube.com') || url.includes('youtu.be');
+  const finalUrl = isYoutube ? url : mediaUrl;
 
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="aspect-video w-full bg-black border border-charcoal/10 overflow-hidden shadow-elevated"
+      className="aspect-video w-full bg-black border border-charcoal/10 overflow-hidden shadow-elevated relative"
     >
-      {youtubeId ? (
-        <iframe
-          width="100%"
-          height="100%"
-          src={`https://www.youtube.com/embed/${youtubeId}`}
-          title="YouTube video player"
-          style={{ border: 0 }}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-      ) : (
-        <video
-          ref={videoRef}
-          src={mediaUrl}
-          controls
-          className="w-full h-full"
-          poster={thumbUrl}
-          onTimeUpdate={onTimeUpdate}
-          onEnded={onEnded}
-        >
-          <track kind="captions" />
-          Your browser does not support the video tag.
-        </video>
-      )}
+      <ReactPlayer
+        src={finalUrl}
+        width="100%"
+        height="100%"
+        controls
+        light={thumbnail ? thumbUrl : false}
+        onTimeUpdate={(e: React.SyntheticEvent<HTMLVideoElement>) => {
+          if (onProgress) {
+            const target = e.currentTarget;
+            onProgress({
+              played: target.duration ? target.currentTime / target.duration : 0,
+              playedSeconds: target.currentTime,
+              loaded: 0,
+              loadedSeconds: 0
+            });
+          }
+        }}
+        onEnded={onEnded}
+        style={{ position: 'absolute', top: 0, left: 0 }}
+      />
     </motion.div>
   );
 }
-

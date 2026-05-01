@@ -14,7 +14,7 @@ type FormData = Pick<Course, 'title' | 'description' | 'category' | 'price'> & {
 
 const UNSPLASH_THUMBNAILS = [
   'https://images.unsplash.com/photo-1633356122544-f134324a6cee',
-  'https://images.unsplash.com/photo-1667372393086-9d4001d4d732',
+  'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
   'https://images.unsplash.com/photo-1555066931-4365d14bab8c',
   'https://images.unsplash.com/photo-1542831371-29b0f74f9713',
   'https://images.unsplash.com/photo-1498050108023-c5249f4df085',

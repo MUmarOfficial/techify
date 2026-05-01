@@ -5,15 +5,13 @@ export const useVideoProgress = (enrollmentId?: string, lessonId?: string) => {
   const [watchPercentage, setWatchPercentage] = useState(0);
   const [isWatchComplete, setIsWatchComplete] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const lastUpdateRef = useRef(0); // Track last update to avoid too many API calls
 
-  // Handle time update on video
-  const handleTimeUpdate = async (e: React.SyntheticEvent<HTMLVideoElement>) => {
-    if (!videoRef.current || !enrollmentId || !lessonId) return;
+  // Handle time update from ReactPlayer's onProgress
+  const handleProgress = async (state: { played: number }) => {
+    if (!enrollmentId || !lessonId) return;
 
-    const video = e.currentTarget;
-    const percentage = Math.round((video.currentTime / video.duration) * 100);
+    const percentage = Math.round(state.played * 100);
     const now = Date.now();
 
     // Mark as complete when video reaches 95%
@@ -73,8 +71,7 @@ export const useVideoProgress = (enrollmentId?: string, lessonId?: string) => {
   return {
     watchPercentage,
     isWatchComplete,
-    videoRef,
-    handleTimeUpdate,
+    handleProgress,
     handleVideoEnded,
     setWatchPercentage,
   };
